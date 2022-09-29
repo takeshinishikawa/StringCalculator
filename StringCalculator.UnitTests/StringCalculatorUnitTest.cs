@@ -53,5 +53,16 @@ namespace StringCalculator.UnitTests
 
             addDecimal.Should().Throw<ArgumentException>().WithMessage("*numbers*");
         }
+
+        [Fact]
+        public void StringCalculator_WhenValidInput_ShouldReturnSum()
+        {
+            var sut = new Domain.Models.StringCalculator();
+
+            var result = sut.Add("1,3");
+
+            result.Should().Be(4);
+        }
+
     }
 }

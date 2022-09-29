@@ -15,13 +15,16 @@ namespace StringCalculator.Domain.Models
                 return 0;
 
             var parts = numbers.Split(',');
+            var exceedsCount = parts.Length > 2;
+            var consecutiveCommas = parts.Any(x => string.IsNullOrEmpty(x));
+            var nonNumbers = parts.Any(x => !int.TryParse(x, out int _));
 
-            if (parts.Length > 2 || parts.Any(x => string.IsNullOrEmpty(x)))
-                throw new ArgumentException(nameof(numbers));
-            else if (parts.Any(x => !int.TryParse(x, out int _)))
+            if (exceedsCount || consecutiveCommas || nonNumbers)
                 throw new ArgumentException(nameof(numbers));
 
-            return 100;
+            var sum = parts.Sum(x => Convert.ToInt32(x));
+
+            return sum;
         }
     }
 }
